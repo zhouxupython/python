@@ -1,0 +1,10 @@
+1.  lxml
+sudo pip install -t /usr/lib/python2.7/  LXML
+
+src/lxml/etree.c:97:20: fatal error: Python.h: No such file or directory
+
+https://stackoverflow.com/questions/5178416/pip-install-lxml-error
+http://blog.csdn.net/lincifer/article/details/51296559
+
+
+
