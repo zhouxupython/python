@@ -1,0 +1,31 @@
+
+【linux】
+【eclipse】
+不要太高版本的eclipse，因为高版本要求的jdk要1.8
+http://blog.csdn.net/yongh701/article/details/45008093
+
+sudo tar zxvf eclipse-java-mars-2-linux-gtk-x86_64.tar.gz -C /usr/lib
+zx@scsa-computer:~$ sudo ln -s /usr/lib/eclipse/eclipse /home/zx/Desktop/eclipse
+
+【pydev】
+http://www.cnblogs.com/Bonker/p/3584707.html
+
+eclipse 安装python后pydev不出现
+pydev版本也不能太高	http://www.pydev.org/update_sites/4.5.5/
+http://blog.csdn.net/sinat_29581293/article/details/52198642
+
+如果安装错误，可以在 help->installation details->installed software 看到该软件，选中后点击下方Uninstall
+然后重新安装就行了
+
+
+
+[运行]		/home/zx/Desktop/eclipse
+
+因为tablib和sqlalchemy使用pip后默认安装在 /usr/local/lib/python2.7/dist-packages
+所以需要在eclipse上进行配置，才能引入。 
+window->preference->pydev->interpreters->python interpreters->libraries->New Folder->/usr/local/lib/python2.7/dist-packages
+
+指定安装位置
+sudo /home/py/.local/bin/pip install -t /usr/lib/python2.7/ tablib
+如果是安装在 /usr/lib/python2.7 下，那么安装好之后，在eclipse中关闭工程，然后重新打开，就可以加载到新安装的模块了
+再不行就重建工程
