@@ -7,4 +7,7 @@ https://stackoverflow.com/questions/5178416/pip-install-lxml-error
 http://blog.csdn.net/lincifer/article/details/51296559
 
 
+pip3
+http://www.cnblogs.com/wenchengxiaopenyou/p/5709218.html
 
+sudo pip3 install -t /usr/lib/python3.5 --upgrade  sqlalchemy
