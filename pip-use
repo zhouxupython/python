@@ -11,3 +11,256 @@ pip3
 http://www.cnblogs.com/wenchengxiaopenyou/p/5709218.html
 
 sudo pip3 install -t /usr/lib/python3.5 --upgrade  sqlalchemy
+
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+【pipsi】
+py@ontv:~/github/basic/pipsi$ python get-pipsi.py
+('bin_dir: ', '/home/py/.local/bin')
+('home_dir: ', '/home/py/.local/venvs')
+('args.src: ', 'pipsi')
+('venv_pkg: ', 'virtualenv')
+('args.ignore_existing: ', False)
+('PIP: ', '/bin/pip')
+Installing pipsi
+('venv: ', '/home/py/.local/venvs/pipsi')
+New python executable in /home/py/.local/venvs/pipsi/bin/python
+Installing setuptools, pip, wheel...done.
+Collecting pipsi
+/home/py/.local/venvs/pipsi/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:318: SNIMissingWarning: An HTTPS request has been made, but the SNI (Subject Name Indication) extension to TLS is not available on this platform. This may cause the server to present an incorrect TLS certificate, which can cause validation failures. You can upgrade to a newer version of Python to solve this. For more information, see https://urllib3.readthedocs.io/en/latest/security.html#snimissingwarning.
+  SNIMissingWarning
+/home/py/.local/venvs/pipsi/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:122: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. You can upgrade to a newer version of Python to solve this. For more information, see https://urllib3.readthedocs.io/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+  Downloading pipsi-0.9-py2-none-any.whl
+Collecting Click (from pipsi)
+  Downloading click-6.7-py2.py3-none-any.whl (71kB)
+    100% |████████████████████████████████| 71kB 92kB/s
+Collecting virtualenv (from pipsi)
+  Downloading virtualenv-15.1.0-py2.py3-none-any.whl (1.8MB)
+    100% |████████████████████████████████| 1.8MB 572kB/s
+Installing collected packages: Click, virtualenv, pipsi
+Successfully installed Click-6.7 pipsi-0.9 virtualenv-15.1.0
+Installed pipsi binary in /home/py/.local/bin
+pipsi is now installed.
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$
+
+
+
+
+
+
+py@ontv:~$ ll .local/bin/pipsi
+lrwxrwxrwx 1 py py 37 Nov 14 13:57 .local/bin/pipsi -> /home/py/.local/venvs/pipsi/bin/pipsi*
+py@ontv:~$
+
+
+
+
+【click】
+http://click.pocoo.org/4/api/
+http://python.jobbole.com/87111/
+http://click.pocoo.org/6/
+
+http://blog.csdn.net/lihua_tan/article/details/54917153	Python及测试相关资料链接   
+http://blog.csdn.net/lihua_tan/article/details/60600601	比较好的Python博客网址   
+
+https://www.programcreek.com/python/example/86569/click.pass_context	搜集例子
+
+http://www.jianshu.com/p/fb75bcacaaa0		pyspider源代码-run.py click模块
+http://www.jianshu.com/p/d2b61a892c32
+https://www.cnblogs.com/alexkn/p/6980400.html
+
+
+
+sudo /home/py/.local/bin/pip install click
+
+contextor
+http://python.jobbole.com/87317/	python黑魔法---上下文管理器
+
+https://www.cnblogs.com/fengbeihong/articles/3374132.html	Popen
+
+
+
+
+
+
+【code】
+链接：http://www.jianshu.com/p/fb75bcacaaa0
+test.py ：
+
+import click
+@click.command()
+@click.option('--count', default=1, help='Number of greetings.')
+@click.option('--name', prompt='Your name',
+              help='The person to greet.')
+@click.pass_context
+def hello(ctx,**kwargs):
+    click.echo(ctx)
+    click.echo(kwargs)
+
+
+if __name__ == '__main__':
+    hello()
+
+run
+>>> python test.py 
+Your name: aaa
+<click.core.Context object at 0x7f74d2cf0210>
+{'count': 1, 'name': u'aaa'}
+
+
+
+0.
+py@ontv:~/.local$ pipsi  --version
+pipsi, version 0.9, python /home/py/.local/venvs/pipsi/bin/python
+
+
+pipsi list ---》   ？？cli()  ---》 ？？？ ---》   @cli.command('list') ---》 list_cmd(repo, versions) ---》 (repo, versions)  怎么传入的？？？ ---》repo.list_everything()
+
+
+
+
+cli()：  ctx.obj = Repo(home, bin_dir)
+@click.pass_obj   就是传入 ctx.obj， 也就是 list_cmd的入参 repo
+
+
+
+
+1.每次一个命令被调用,一个新的上下文被处创建和指向父类上下文.
+通常,你看不到这些上下文.
+但是,上下文自动传递给参数和方法.
+命令可以通过 pass_context()来请求和传递上下文.
+在这种情况下上下文作文第一个参数.
+
+上下文还可以携带可以程序指定对象。
+
+将一个Repo的实例传递给ctx.obj
+@click.pass_context
+def cli(ctx, home, bin_dir):
+    ctx.obj = Repo(home, bin_dir)
+
+
+pass_obj将这个obj，也就是ctx.obj传入@cli.command()装饰的install函数，
+作为函数的【第一个】入参，即repo就是ctx.obj
+@cli.command()
+@click.pass_obj
+def install(repo, package, python, editable, system_site_packages):
+    if repo.install(package, python, editable, system_site_packages):
+        click.echo('Done.')
+    else:
+        sys.exit(1)
+
+
+		
+2.	list_cmd		
+
+repo.list_everything() 
+self.home 就是 ~/.local/venvs		
+if os.path.isdir(self.home):
+	for venv in os.listdir(self.home):			当前~/.local/venvs下只有pipsi目录
+		venv_path = os.path.join(self.home, venv)	~/.local/venvs/pipsi
+		if os.path.isdir(venv_path) and \
+		   os.path.isfile(venv_path + python):		~/.local/venvs/pipsi/bin/python存在
+			version = None
+			if versions:		False
+				try:
+					version = self.get_package_info(venv_path)['version']
+				except:
+					pass
+			venvs[venv] = [list(self.find_installed_executables(venv_path)), version]
+		
+		
+		
+def find_installed_executables(self, path):			~/.local/venvs/pipsi
+	prefix = join(realpath(normpath(path)), '')		/home/py/.local/venvs/pipsi
+	try:
+		for filename in os.listdir(self.bin_dir):	/home/py/.local/bin
+			exe = os.path.join(self.bin_dir, filename)
+			target = real_readlink(exe)		当前只有pipsi是link文件，target是/home/py/.local/venvs/pipsi/bin/pipsi
+			if target is None:
+				continue
+			if target.startswith(prefix):			target是以prefix开头的，找到一个
+				yield exe
+	except OSError:
+		pass		
+		
+
+os.readlink如果filename是link，那么target是真实文件
+如果不是link抛出OSError
+def real_readlink(filename):
+    try:
+        target = os.readlink(filename)		
+    except (OSError, IOError, AttributeError):
+        return None
+    return normpath(realpath(join(dirname(filename), target)))		
+		
+		
+		
+
+		
+		
+py@ontv:~/github/basic/pipsi$ python pipsi.py list
+Packages and scripts installed through pipsi:
+  Package "pipsi":
+    /home/py/.local/bin/pipsi
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$ python pipsi.py list --versions
+Packages and scripts installed through pipsi:
+  Package "pipsi" (unknown):
+py@ontv:~/github/basic/pipsi$
+
+
+
+py@ontv:~/github/basic/pipsi$ python pipsi.py uninstall Pygments
+path: /home/py/.local/venvs/pygments
+paths: [u'/home/py/.local/venvs/pygments', '/home/py/.local/bin/pygmentize']
+The following paths will be removed:
+  /home/py/.local/venvs/pygments
+  /home/py/.local/bin/pygmentize
+
+Do you want to uninstall Pygments? [y/N]: y
+path: /home/py/.local/venvs/pygments
+path: /home/py/.local/bin/pygmentize
+Done!
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$
+py@ontv:~/github/basic/pipsi$ python pipsi.py install Pygments
+package: Pygments
+venv_path: /home/py/.local/venvs/pygments
+self.bin_dir: /home/py/.local/bin
+Already using interpreter /usr/bin/python
+New python executable in /home/py/.local/venvs/pygments/bin/python
+Installing setuptools, pip, wheel...done.
+Collecting Pygments
+/home/py/.local/venvs/pygments/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:318: SNIMissingWarning: An HTTPS request has been made, but the SNI (Subject Name Indication) extension to TLS is not available on this platform. This may cause the server to present an incorrect TLS certificate, which can cause validation failures. You can upgrade to a newer version of Python to solve this. For more information, see https://urllib3.readthedocs.io/en/latest/security.html#snimissingwarning.
+  SNIMissingWarning
+/home/py/.local/venvs/pygments/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:122: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. You can upgrade to a newer version of Python to solve this. For more information, see https://urllib3.readthedocs.io/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+  Using cached Pygments-2.2.0-py2.py3-none-any.whl
+Installing collected packages: Pygments
+Successfully installed Pygments-2.2.0
+virtualenv: /home/py/.local/venvs/pygments
+prefix: /home/py/.local/venvs/pygments/bin
+result: ['/home/py/.local/venvs/pygments/bin/pygmentize']
+script: /home/py/.local/venvs/pygments/bin/pygmentize
+script_dst: /home/py/.local/bin/pygmentize
+src: /home/py/.local/venvs/pygments/bin/pygmentize
+dst: /home/py/.local/bin/pygmentize
+
+  Linked script /home/py/.local/bin/pygmentize
+Done.
+py@ontv:~/github/basic/pipsi$
+
+
+
+
+		
+		
+		
+		
