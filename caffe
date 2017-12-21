@@ -1,0 +1,99 @@
+
+
+caffe官方教程中文版：链接：http://pan.baidu.com/s/1hsuW4tQ 密码：kft2
+
+
+http://caffecn.cn/
+
+
+【Caffe】
+https://github.com/BVLC/caffe
+http://caffe.berkeleyvision.org/
+http://caffe.berkeleyvision.org/tutorial/
+http://caffe.berkeleyvision.org/installation.html
+http://caffe.berkeleyvision.org/gathered/examples/mnist.html
+https://groups.google.com/forum/#!forum/caffe-users
+
+http://blog.csdn.net/kkk584520/article/category/1501249		21天实战Caffe
+http://pan.baidu.com/s/1i47Zydv 密码: 9wde				    21天实战Caffe
+http://blog.csdn.net/kkk584520/article/details/52748821    课后习题参考答案
+https://pan.baidu.com/s/1slffF69						密码：6688
+
+http://blog.csdn.net/zb1165048017/article/category/6369975/1
+
+
+
+http://www.cnblogs.com/louyihang-loves-baiyan/
+
+https://zhuanlan.zhihu.com/p/22464594		无痛的机器学习第一季目录
+https://zhuanlan.zhihu.com/p/26884917		无痛的机器学习第二季目录
+
+
+【例子】
+https://www.zhihu.com/question/27982282		深度学习caffe的代码怎么读？
+-1. http://caffe.berkeleyvision.org/gathered/examples/mnist.html
+0. https://github.com/BVLC/caffe/wiki/Development	添加新的层
+
+1. http://deeplearning.stanford.edu/wiki/index.php/UFLDL_Tutorial
+   http://deeplearning.stanford.edu/wiki/index.php/UFLDL%E6%95%99%E7%A8%8B	UFLDL教程
+2. http://neuralnetworksanddeeplearning.com/chap2.html	
+3. http://karpathy.github.io/neuralnets/		Hacker's guide to Neural Networks
+4. https://www.zhihu.com/question/28385679		在 Caffe 中如何计算卷积？
+5. https://chrischoy.github.io/research/making-caffe-layer/
+6. https://link.zhihu.com/?target=http%3A//www.iqiyi.com/a_19rrhbvoe9.html  NVIDIA CUDA初级教程视频
+
+
+
+
+
+【源码】
+https://www.zhihu.com/question/27982282		深度学习caffe的代码怎么读？
+https://zhuanlan.zhihu.com/p/25127756		caffe源码解析-开篇
+https://buptldy.github.io/2016/10/09/2016-10-09-Caffe_Code/		Caffe Source Code Analysis
+http://alanse7en.github.io/caffedai-ma-jie-xi-1/			Caffe代码解析(1)
+https://github.com/BUPTLdy/Caffe_Code_Analysis   !！！
+http://alanse7en.github.io/posts/
+http://yufeigan.github.io/
+http://imbinwang.github.io/blog/inside-caffe-code-layer
+http://blog.csdn.net/seven_first/article/details/47378697
+http://withwsf.github.io/2016/04/14/Caffe-with-Python-Layer/
+http://yufeigan.github.io/
+https://imbinwang.github.io/blog/
+http://blog.csdn.net/seven_first/article/details/47378697
+http://blog.csdn.net/xizero00?viewmode=contents
+https://zhuanlan.zhihu.com/p/24343706	深度学习框架Caffe源码解析
+
+http://blog.csdn.net/column/details/caffe-source-clue.html	caffe源码导读
+http://blog.csdn.net/column/details/13527.html	学习caffe
+
+
+
+
+【cuda】
+https://zhuanlan.zhihu.com/p/27567922			不会装cuda配环境的小学生怎么躺撸caffe
+
+
+（1）Caffe源码阅读路线图应该是从CAFFE_ROOT/src/caffe/proto/caffe.proto开始，了解各类数据结构，主要是内存对象和序列化磁盘文件的一一对应关系，知道如何从磁盘Load一个对象到内存，以及如何将内存对象Save到磁盘，中间的过程实现都是由Protobuf自动完成的。
+
+（2）第二步就是看头文件，不用急于去看cpp文件，先理解整个框架。Caffe中类数目众多，但脉络十分清晰。在Testing时，最外层的类是Caffe::Net，包含了多个Caffe::Layer对象，而Layer对象派生出神经网络多种不同层的类（DataLayer, ConvolutionLayer, InnerProductionLayer, AccurancyLayer等），每层会有相应的输入输出（Blob对象）以及层的参数（可选，Blob对象）；Blob中包括了SyncedMemory对象，统一了CPU和GPU存储器。自顶向下去看这些类，结合理论知识很容易掌握使用方法。
+
+（3）第三步就是有针对性地去看cpp和cu文件了。一般而言，Caffe框架不需要修改，只需要增加新的层实现即可。例如你想自己实现卷积层，只需从ConvolutionLayer派生一个新类MyConvolutionLayer，然后将几个虚函数改成自己的实现即可。所以这一阶段关注点在算法上，而不是源码本身。
+
+（4）第四步就很自由了，可以编写各类工具，集成到Caffe内部。在CAFFE_ROOT/tools/下面有很多实用工具，可以根据需要修改。例如从训练好的模型中抽取参数进行可视化可以用Python结合matplot实现。
+
+（5）接下来，如果想更深层次学习，最好是自己重新写一遍Caffe（时间充裕的情况）。跳出现有的框架，重新构建自己的框架，通过对比就能学到更多内容。
+
+
+
+按照神经网络的运行过程看Caffe就好了
+
+
+
+
+
+
+
+
+
+
+
