@@ -1,0 +1,51 @@
+Ubuntu 14.04.5 LTS \n \l
+
+！！！依赖系统目录下的库文件
+
+zx@scsa-computer:~$ sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
+zx@scsa-computer:~$ sudo apt-get install --no-install-recommends libboost-all-dev
+zx@scsa-computer:~$ sudo apt-get install libatlas-base-dev
+zx@scsa-computer:~$ sudo apt-get install python-dev
+zx@scsa-computer:~$ sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev
+
+
+sudo apt-get install gfortran
+
+
+
+!!! 手动安装opencv时，ccmake .. 之后需要修改 CMAKE_INSTALL_PREFIX 的路径，修改为 /usr
+make
+sudo make install
+
+
+
+！！！
+# CPU-only switch (uncomment to build without GPU support).
+CPU_ONLY := 1
+
+！！！使用local_install中的lib和include进行编译时，需要修改 Makefile.config文件的
+# Uncomment if you're using OpenCV 3
+OPENCV_VERSION := 3		使能这一行配置
+
+书P47
+
+ifeq ($(USE_OPENCV), 1)
+        LIBRARIES += opencv_core opencv_highgui opencv_imgproc
+
+        ifeq ($(OPENCV_VERSION), 3)
+                LIBRARIES += opencv_imgcodecs
+        endif
+
+endif
+
+
+使能 OPENCV_VERSION := 3， 就能添加 opencv_imgcodecs 这个库
+
+然后make
+
+zx@scsa-computer:~/Caffe/caffe$ ldd /home/zx/Caffe/caffe/.build_release/tools/../lib/libcaffe.so.1.0.0 | grep not
+zx@scsa-computer:~/Caffe/caffe$
+
+
+make test
+make runtest
