@@ -1,0 +1,11 @@
+1. ('').join
+int(('').join(sorted(list(str(b)), reverse=True)))
+
+('').join
+r_lsa
+['3', '2', '1']
+>>> s_r_lsa = ('').join(r_lsa)
+>>> s_r_lsa
+'321'
+
+
