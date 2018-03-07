@@ -9,3 +9,20 @@ r_lsa
 '321'
 
 
+2. cc[-4:]     https://www.codewars.com/kata/credit-card-mask/python
+
+>>> cc='hrgyerhrtjty'
+>>> cc[-4:]
+'tjty'
+>>> cc='hr'
+>>> cc[-4:]
+'hr'
+
+"#"*(len(cc)-4) + cc[-4:]
+
+
+
+
+
+
+
