@@ -34,6 +34,7 @@ def series_sum(n):
     return '{:.2f}'.format(0 if not n else reduce(lambda x, y: x+y, [(1.00/(3*i+1)) for i in range(n)]))
 
 https://www.cnblogs.com/anpengapple/p/6507271.html  python中关于round函数的小坑
+https://www.cnblogs.com/gide/p/6955895.html python中强大的format函数
 跟浮点数的精度有关。
 除非对精确度没什么要求，否则尽量避开用round()函数。近似计算我们还有其他的选择：
 使用math模块中的一些函数，比如math.ceiling（天花板除法）。
