@@ -20,6 +20,28 @@ r_lsa
 
 "#"*(len(cc)-4) + cc[-4:]
 
+3.   sum  format         https://www.codewars.com/kata/sum-of-the-first-nth-term-of-series/python
+>>> '{:.2f}'.format(sum(1.00/(3 * i + 1) for i in range(5)))
+'1.57'
+
+(1) sum 可以处理 长度为0 的 list
+def series_sum(n):
+    return '{:.2f}'.format(sum(1.00/(3 * i + 1) for i in range(5)))
+
+(2) reduce不可以处理 长度为0 的 list
+from functools import reduce
+def series_sum(n):
+    return '{:.2f}'.format(0 if not n else reduce(lambda x, y: x+y, [(1.00/(3*i+1)) for i in range(n)]))
+
+https://www.cnblogs.com/anpengapple/p/6507271.html  python中关于round函数的小坑
+跟浮点数的精度有关。
+除非对精确度没什么要求，否则尽量避开用round()函数。近似计算我们还有其他的选择：
+使用math模块中的一些函数，比如math.ceiling（天花板除法）。
+python自带整除，python2中是/，3中是//，还有div函数。
+字符串格式化可以做截断使用，例如 "%.2f" % value（保留两位小数并变成字符串……如果还想用浮点数请披上float()的外衣）。！！！！！！！！
+当然，对浮点数精度要求如果很高的话，请用decimal模块。
+
+
 
 
 
